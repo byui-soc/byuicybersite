@@ -66,12 +66,12 @@ Run these commands and perform these steps **on your Ubuntu deployment server**.
     *   Manually copy your project (or essential files like `package.json`, `package-lock.json`, `.next/`, `public/`, `next.config.mjs`) to the server directory (`/var/www/cybersociety-app`).
     *   Navigate to the directory on the server: `cd /var/www/cybersociety-app`
     *   Install production dependencies: `npm install --production`
-    *   Start the app with PM2 (replace `"cybersociety-app"` with your preferred name):
+    *   Start the app with PM2 using the direct path to `next` (replace `"cybersociety-app"` with your preferred name):
         ```bash
         # Run as the deploy user, not root
-        pm2 start npm --name "cybersociety-app" -- start 
+        pm2 start ./node_modules/.bin/next --name "cybersociety-app" -- start 
         ```
-        *(The `start` script in `package.json` typically runs `next start`)*
+        *(This directly executes the Next.js binary)*
     *   Save the PM2 process list for reboot persistence:
         ```bash
         pm2 save

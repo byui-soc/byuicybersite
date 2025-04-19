@@ -48,4 +48,8 @@ jobs:
             cd ${{ secrets.TARGET_DIR }}
             npm install --production # Install only production dependencies
             # Ensure pm2 app name matches the one used in manual setup
-            pm2 reload cybersociety-app || pm2 restart cybersociety-app 
+            # Delete the old process definition if it exists, ignore error if it doesn't
+            pm2 delete cybersociety-app || true 
+            # Start the new process using the direct path
+            pm2 start ./node_modules/.bin/next --name "cybersociety-app" -- start
+            # pm2 save # Not strictly needed here if startup script is configured 
