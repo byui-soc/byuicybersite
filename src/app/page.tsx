@@ -5,14 +5,14 @@ import { motion } from 'framer-motion'; // Import motion
 
 export default function HomePage() {
   return (
-    <div className="container mx-auto px-4 py-16 text-center">
+    <div className="container mx-auto px-4 pt-8 pb-16 text-center">
       <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500">
         Welcome to the BYU-I Society of Cybersecurity
       </h1>
       <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
         Your hub for all things cybersecurity. Explore resources, connect with peers, and stay up to date with our events.
       </p>
-      <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto"> Upcoming Event:</p>
+      <p className="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto"> Upcoming Event:</p>
       {/* Event Poster Section */}
       <div className="relative w-full max-w-3xl mx-auto mb-12 shadow-xl shadow-purple-500/20 rounded-lg overflow-hidden border border-purple-700/50 aspect-video">
          {/* Changed aspect ratio based on typical poster dimensions, adjust if needed */}
