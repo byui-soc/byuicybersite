@@ -18,7 +18,7 @@ const PageTransitionWrapper: React.FC<PageTransitionWrapperProps> = ({ children 
   const pathname = usePathname();
 
   return (
-    <AnimatePresence mode="wait"> {/* mode="wait" waits for exit animation before starting enter */}
+    <AnimatePresence>
       <motion.div
         key={pathname} // Crucial: Key changes trigger animations
         variants={variants}
