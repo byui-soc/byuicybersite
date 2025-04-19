@@ -26,7 +26,9 @@ const PageTransitionWrapper: React.FC<PageTransitionWrapperProps> = ({ children 
         animate="enter"
         exit="exit"
       >
-        {children}
+        <div>
+          {children}
+        </div>
       </motion.div>
     </AnimatePresence>
   );

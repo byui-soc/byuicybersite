@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import PageTransitionWrapper from "@/components/PageTransitionWrapper";
 import ParticlesBackground from "@/components/ParticlesBackground";
 
 export const metadata: Metadata = {
@@ -21,9 +22,9 @@ export default function RootLayout({
         <ParticlesBackground />
         <Navbar />
         <main className="flex-grow z-10">
-          {/* <PageTransitionWrapper> */}
+          <PageTransitionWrapper>
             {children} 
-          {/* </PageTransitionWrapper> */}
+          </PageTransitionWrapper>
         </main>
         {/* Footer could go here */}
       </body>
