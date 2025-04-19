@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark blue/purple background */
+  --background: #0d0d2b; /* Keep as fallback or base */
+  /* Bright cyan foreground */
+  --foreground: #00ffff;
+  /* Optionally, a secondary color for less emphasis */
+  /* --foreground-secondary: #a0a0ff; */
 }
 
 @theme inline {
@@ -12,15 +16,42 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Remove the media query for dark mode preference */
+/*
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
+*/
 
+/* Animated Gradient Background */
+@keyframes animateGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* body {
+  background: linear-gradient(-45deg, #0d0d2b, #1a0033, #003333, #1a1a4d);
+  background-size: 400% 400%;
+  animation: animateGradient 30s ease infinite;
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  overflow-x: hidden; 
+} */
+
+/* Restore simpler background for particle overlay */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  overflow-x: hidden; /* Keep this to prevent potential horizontal scroll */
 }
+
+/* @keyframes animateGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+} */
