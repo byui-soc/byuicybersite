@@ -50,6 +50,6 @@ jobs:
             # Ensure pm2 app name matches the one used in manual setup
             # Delete the old process definition if it exists, ignore error if it doesn't
             pm2 delete cybersociety-app || true 
-            # Start the new process using the ABSOLUTE path
-            pm2 start ${{ secrets.TARGET_DIR }}/node_modules/.bin/next --name "cybersociety-app" -- start
+            # Start the new process using npx to find local 'next' binary
+            pm2 start "npx next start" --name "cybersociety-app"
             # pm2 save # Not strictly needed here if startup script is configured 
