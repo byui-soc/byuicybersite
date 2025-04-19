@@ -50,12 +50,13 @@ const getGalleryImages = (page: number, limit: number): { images: GalleryImage[]
   }
 };
 
-// Type props directly in the function signature
-export default function GalleryPage({ 
-  searchParams 
-}: { 
-  searchParams?: { [key: string]: string | string[] | undefined } 
-}) {
+// Define a specific Props type
+type Props = {
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
+
+// Use the Props type
+export default function GalleryPage({ searchParams }: Props) {
   const currentPage = typeof searchParams?.page === 'string' ? parseInt(searchParams.page, 10) : 1;
   const limit = 20; // Images per page
 
