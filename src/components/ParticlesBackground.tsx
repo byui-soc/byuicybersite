@@ -26,7 +26,8 @@ const ParticlesBackground: React.FC = () => {
         });
     }, []);
 
-    const particlesLoaded = useCallback(async (container: Container | undefined) => {
+    const particlesLoaded = useCallback(async (/* container: Container | undefined */) => {
+        // Parameter removed as it was unused
         // console.log("Particles loaded", container);
     }, []);
 

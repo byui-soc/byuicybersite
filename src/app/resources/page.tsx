@@ -1,8 +1,7 @@
 'use client'; // Needed for motion components if we add whileHover
 
 import React from 'react';
-import Link from 'next/link'; // Import Link for Next.js routing if needed, though these are external
-import { motion } from 'framer-motion'; // Import motion
+import { motion } from 'framer-motion';
 
 // Define resource data structure
 interface Resource {

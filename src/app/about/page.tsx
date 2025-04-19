@@ -1,7 +1,7 @@
 // Removed 'use client';
 
 import React from 'react';
-import Image from 'next/image'; // Import Image for leadership photos
+// import Image from 'next/image'; // Removed unused import
 
 // Placeholder data for leadership - replace with actual data
 const leadershipTeam = [

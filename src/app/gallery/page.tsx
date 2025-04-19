@@ -1,7 +1,7 @@
 // Removed 'use client';
 
 import React from 'react';
-import Image from 'next/image'; // Keep Image if used elsewhere, or remove if only in Client
+// import Image from 'next/image'; // Removed unused import
 import fs from 'fs'; // Can use fs now
 import path from 'path'; // Can use path now
 // Removed useState, motion, AnimatePresence imports

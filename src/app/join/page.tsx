@@ -47,7 +47,7 @@ export default function JoinPage() {
 
         {/* Widget Section */}
         <div className="flex flex-col items-center w-full lg:w-auto">
-          <h2 className="text-2xl font-semibold text-cyan-300 mb-4 text-center">Who's Online?</h2>
+          <h2 className="text-2xl font-semibold text-cyan-300 mb-4 text-center">Who&apos;s Online?</h2>
           <iframe
             src={widgetUrl}
             width="350"
