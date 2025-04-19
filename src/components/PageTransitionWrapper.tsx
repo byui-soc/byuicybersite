@@ -25,6 +25,7 @@ const PageTransitionWrapper: React.FC<PageTransitionWrapperProps> = ({ children 
         initial="hidden"
         animate="enter"
         exit="exit"
+        style={{ position: 'absolute', top: 0, left: 0, width: '100%' }}
       >
         <div>
           {children}

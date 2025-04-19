@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className="bg-background text-foreground flex flex-col min-h-screen">
         <ParticlesBackground />
         <Navbar />
-        <main className="flex-grow z-10">
+        <main className="flex-grow z-10 relative">
           <PageTransitionWrapper>
             {children} 
           </PageTransitionWrapper>
