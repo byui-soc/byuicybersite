@@ -6,51 +6,83 @@ branch.
 
 ## Phase 1: Server Preparation
 
-Run these commands and perform these steps **on your deployment server**.
+Run these commands and perform these steps **on your Ubuntu deployment server**.
 
-1.  **Install Node.js:**
-    *   Ensure you have Node.js installed (LTS version recommended). Installation methods vary by OS (e.g., NVM, apt, yum).
-    *   Verify installation: `node -v`
-
-2.  **Install PM2:**
-    *   PM2 is a production process manager for Node.js applications.
-    *   Install globally: `sudo npm install pm2 -g`
-
-3.  **SSH Key Setup:**
-    *   GitHub Actions requires SSH key authentication (not password).
-    *   **Generate Keys:** If you don't have a pair, generate one: `ssh-keygen -t rsa -b 4096` (Press Enter for defaults).
-    *   **Authorize Key:** Copy the **public** key content (usually from `~/.ssh/id_rsa.pub`) into the `~/.ssh/authorized_keys` file on your server.
+1.  **Update System & Install Prerequisites:**
+    *   Ensure your system is up-to-date and install `curl` (if not present) and `build-essential` (for potential native npm modules):
         ```bash
-        # Example command (if generating keys on local machine):
-        # cat ~/.ssh/id_rsa.pub | ssh your_user@your_server_ip 'mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys'
-
-        # Example command (if generating keys on the server):
-        # mkdir -p ~/.ssh
-        # chmod 700 ~/.ssh
-        # cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-        # chmod 600 ~/.ssh/authorized_keys
+        sudo apt update && sudo apt upgrade -y
+        sudo apt install -y curl build-essential
         ```
+
+2.  **Install Node.js (using NodeSource):**
+    *   This method allows installing specific Node.js versions (LTS recommended, e.g., v20.x).
+    *   Download and run the NodeSource setup script (replace `20.x` with your desired major version):
+        ```bash
+        curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+        ```
+    *   Install Node.js:
+        ```bash
+        sudo apt install -y nodejs
+        ```
+    *   Verify installation: `node -v` and `npm -v`
+    *   *(Alternative: Install Node.js via NVM (Node Version Manager) for more flexibility if needed: [https://github.com/nvm-sh/nvm#installing-and-updating](https://github.com/nvm-sh/nvm#installing-and-updating))* 
+
+3.  **Install PM2:**
+    *   PM2 is a production process manager for Node.js applications.
+    *   Install globally using npm:
+        ```bash
+        sudo npm install pm2 -g
+        ```
+
+4.  **SSH Key Setup:**
+    *   GitHub Actions requires SSH key authentication (not password).
+    *   **Generate Keys:** If you don't have a pair on the server, generate one:
+        ```bash
+        ssh-keygen -t rsa -b 4096 # Press Enter for defaults
+        ```
+    *   **Authorize Key:** Copy the **public** key content (from `~/.ssh/id_rsa.pub`) into the `~/.ssh/authorized_keys` file.
+        ```bash
+        # Ensure the .ssh directory and file exist with correct permissions
+        mkdir -p ~/.ssh
+        chmod 700 ~/.ssh
+        cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+        chmod 600 ~/.ssh/authorized_keys
+        ```
+        *(If your deployment key is generated elsewhere, securely copy the public key content to `~/.ssh/authorized_keys`)*
     *   **Secure Private Key:** Note the location of the **private** key (usually `~/.ssh/id_rsa`). You will need its *content* for GitHub Secrets. Keep this file secure and private.
 
-4.  **Create Deployment Directory:**
+5.  **Create Deployment Directory:**
     *   Choose and create the directory where the application files will reside on the server.
-    *   Example: `mkdir -p /var/www/cybersociety-app`
+    *   Example: `sudo mkdir -p /var/www/cybersociety-app`
+    *   Set appropriate ownership (replace `your_deploy_user` with the user that will run the app/pm2, often the same user you SSH in with for Actions):
+        ```bash
+        sudo chown your_deploy_user:your_deploy_user /var/www/cybersociety-app
+        ```
 
-5.  **(Optional but Recommended) Initial Manual Deploy & PM2 Start:**
+6.  **(Optional but Recommended) Initial Manual Deploy & PM2 Start:**
     *   Manually copy your project (or essential files like `package.json`, `package-lock.json`, `.next/`, `public/`, `next.config.mjs`) to the server directory (`/var/www/cybersociety-app`).
     *   Navigate to the directory on the server: `cd /var/www/cybersociety-app`
     *   Install production dependencies: `npm install --production`
     *   Start the app with PM2 (replace `"cybersociety-app"` with your preferred name):
         ```bash
-        pm2 start npm --name "cybersociety-app" -- start
+        # Run as the deploy user, not root
+        pm2 start npm --name "cybersociety-app" -- start 
         ```
         *(The `start` script in `package.json` typically runs `next start`)*
-    *   Save the PM2 process list for reboot persistence: `pm2 save`
+    *   Save the PM2 process list for reboot persistence:
+        ```bash
+        pm2 save
+        ```
+    *   Set PM2 to start on boot (follow the output instructions):
+        ```bash
+        pm2 startup # Follow the instructions given by this command
+        ```
     *   Verify it's running: `pm2 list`
 
 ## Phase 2: GitHub Actions Workflow Setup
 
-Perform these steps in your GitHub repository.
+Perform these steps in your GitHub repository: `https://github.com/byui-soc/byuicybersite.git`
 
 1.  **Create GitHub Secrets:**
     *   Go to your repository on GitHub: `Settings` -> `Secrets and variables` -> `Actions`.
