@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
 
 interface GalleryImage {
   id: number;
@@ -13,11 +12,9 @@ interface GalleryImage {
 
 interface GalleryClientProps {
   galleryItems: GalleryImage[];
-  currentPage: number;
-  totalPages: number;
 }
 
-const GalleryClient: React.FC<GalleryClientProps> = ({ galleryItems, currentPage, totalPages }) => {
+const GalleryClient: React.FC<GalleryClientProps> = ({ galleryItems }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const openLightbox = (src: string) => {
@@ -31,7 +28,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ galleryItems, currentPage
   return (
     <>
       {galleryItems.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {galleryItems.map((item) => (
             <motion.div
               key={item.id}
@@ -52,39 +49,6 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ galleryItems, currentPage
         </div>
       ) : (
         <p className="text-center text-gray-500 text-xl py-10">No images found in the gallery.</p>
-      )}
-
-      {/* Pagination Controls */}
-      {totalPages > 1 && (
-        <div className="flex justify-center items-center space-x-4 mt-8 mb-4">
-          {currentPage > 1 ? (
-            <Link 
-              href={`/gallery?page=${currentPage - 1}`}
-              className="bg-gray-700 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded transition duration-300"
-            >
-              &larr; Previous
-            </Link>
-          ) : (
-            <span className="bg-gray-800 text-gray-600 font-bold py-2 px-4 rounded cursor-not-allowed">
-              &larr; Previous
-            </span>
-          )}
-
-          <span className="text-cyan-300">Page {currentPage} of {totalPages}</span>
-
-          {currentPage < totalPages ? (
-            <Link 
-              href={`/gallery?page=${currentPage + 1}`}
-              className="bg-gray-700 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded transition duration-300"
-            >
-              Next &rarr;
-            </Link>
-          ) : (
-             <span className="bg-gray-800 text-gray-600 font-bold py-2 px-4 rounded cursor-not-allowed">
-              Next &rarr;
-            </span>
-          )}
-        </div>
       )}
 
       {/* Lightbox Modal using AnimatePresence */}
