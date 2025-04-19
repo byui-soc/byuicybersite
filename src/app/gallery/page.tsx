@@ -9,54 +9,73 @@ import path from 'path'; // Can use path now
 import GalleryClient from '@/components/GalleryClient'; // Import the new client component
 
 interface GalleryImage {
-  id: number;
+  id: number; // Use index as ID for simplicity here
   src: string;
   alt: string;
 }
 
-// Function to read image filenames (Runs on Server)
-const getGalleryImages = (): GalleryImage[] => {
+// Function to read image filenames and apply pagination (Runs on Server)
+const getGalleryImages = (page: number, limit: number): { images: GalleryImage[], totalPages: number } => {
   const galleryDirectory = path.join(process.cwd(), 'public/images/gallery');
   try {
-    // Ensure directory exists before reading
     if (!fs.existsSync(galleryDirectory)) {
-        console.warn(`Gallery directory not found: ${galleryDirectory}`);
-        return [];
+      console.warn(`Gallery directory not found: ${galleryDirectory}`);
+      return { images: [], totalPages: 0 };
     }
-    const filenames = fs.readdirSync(galleryDirectory);
-    const imageFiles = filenames.filter(file => /\.(jpg|jpeg|png|gif|webp)$/i.test(file));
-    return imageFiles.map((filename, index) => ({
-      id: index + 1,
+    const filenames = fs.readdirSync(galleryDirectory)
+                      .filter(file => /\.(jpg|jpeg|png|gif|webp)$/i.test(file)); // Ensure only images
+                      // Optional: Sort filenames if order matters (e.g., by name, date modified)
+                      // filenames.sort(); 
+
+    const totalImages = filenames.length;
+    const totalPages = Math.ceil(totalImages / limit);
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+
+    const paginatedFilenames = filenames.slice(startIndex, endIndex);
+
+    const images = paginatedFilenames.map((filename, index) => ({
+      // Calculate a unique ID based on page and index within page if needed, 
+      // but using the overall index from the slice is simpler for layoutId
+      id: startIndex + index, 
       src: `/images/gallery/${filename}`,
-      alt: `Gallery image ${index + 1}`
+      alt: `Gallery image ${startIndex + index + 1}` // Alt text reflecting overall index
     }));
+
+    return { images, totalPages };
+
   } catch (error) {
     console.error('Error reading gallery directory:', error);
-    return [];
+    return { images: [], totalPages: 0 };
   }
 };
 
+// Define Page Props to include Search Params
+interface GalleryPageProps {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
 
-export default function GalleryPage() {
-  // Fetch images on the server
-  const galleryItems = getGalleryImages();
+export default function GalleryPage({ searchParams }: GalleryPageProps) {
+  const currentPage = typeof searchParams?.page === 'string' ? parseInt(searchParams.page, 10) : 1;
+  const limit = 20; // Images per page
 
-  // Removed state and handlers
+  // Fetch images for the current page on the server
+  const { images, totalPages } = getGalleryImages(currentPage, limit);
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-6 text-cyan-400">Gallery</h1>
       <p className="text-lg text-gray-300 mb-10">
         A glimpse into our society&apos;s events, workshops, and activities.
-        {galleryItems.length === 0 && " (Gallery directory is empty or not found - add images to /public/images/gallery/)"}
+        {totalPages === 0 && " (Gallery directory is empty or not found - add images to /public/images/gallery/)"}
       </p>
 
-      {/* Render the Client Component, passing image data as props */}
-      <GalleryClient galleryItems={galleryItems} />
-
-  
-
-
+      {/* Render the Client Component, passing image data and pagination info */}
+      <GalleryClient 
+        galleryItems={images} 
+        currentPage={currentPage} 
+        totalPages={totalPages} 
+      />
     </div>
   );
 } 
