@@ -8,6 +8,9 @@ import path from 'path'; // Can use path now
 
 import GalleryClient from '@/components/GalleryClient'; // Import the new client component
 
+// Force dynamic rendering to try and fix transition issue
+export const dynamic = 'force-dynamic';
+
 interface GalleryImage {
   id: number; // Use index as ID for simplicity here
   src: string;
