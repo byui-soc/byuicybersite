@@ -22,10 +22,11 @@ export default function RootLayout({
         <ParticlesBackground />
         <Navbar />
         <main className="flex-grow z-10">
-          <PageTransitionWrapper>
-            {children}
-          </PageTransitionWrapper>
+          {/* <PageTransitionWrapper> */}
+            {children} 
+          {/* </PageTransitionWrapper> */}
         </main>
+        {/* Footer could go here */}
       </body>
     </html>
   );
