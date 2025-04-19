@@ -36,7 +36,6 @@ jobs:
           # Add next.config.mjs only if it exists in your project root
           source: ".next/,public/,package.json,package-lock.json,next.config.mjs" 
           target: ${{ secrets.TARGET_DIR }}
-          strip_components: 1 # Adjust if needed based on source structure
 
       - name: Run commands on Server via SSH
         uses: appleboy/ssh-action@master
