@@ -77,7 +77,7 @@ const GalleryClient: React.FC<GalleryClientProps> = ({ galleryItems }) => {
             </motion.div>
             <button
               onClick={closeLightbox}
-              className="absolute top-5 right-5 text-white text-4xl hover:text-cyan-300 transition-colors"
+              className="absolute bottom-5 right-5 text-white text-4xl hover:text-cyan-300 transition-colors z-[110]"
               aria-label="Close enlarged image view"
             >
               &times;
