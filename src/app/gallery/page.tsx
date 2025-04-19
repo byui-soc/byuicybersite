@@ -47,7 +47,7 @@ export default function GalleryPage() {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-6 text-cyan-400">Gallery</h1>
       <p className="text-lg text-gray-300 mb-10">
-        A glimpse into our society's events, workshops, and activities.
+        A glimpse into our society&apos;s events, workshops, and activities.
         {galleryItems.length === 0 && " (Gallery directory is empty or not found - add images to /public/images/gallery/)"}
       </p>
 
