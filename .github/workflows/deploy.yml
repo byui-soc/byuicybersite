@@ -1,0 +1,51 @@
+name: Deploy Next.js App
+
+on:
+  push:
+    branches:
+      - main # Adjust if your default branch is different (e.g., master)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '23.9.0' # Specify exact Node.js version used locally
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json' # Cache dependencies
+
+      - name: Install dependencies
+        run: npm ci # Use ci for clean installs in CI/CD
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Deploy to Server via SCP
+        uses: appleboy/scp-action@master # Use SCP to copy build files
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # Ensure all necessary files/dirs are listed (comma-separated)
+          # Add next.config.mjs only if it exists in your project root
+          source: ".next/,public/,package.json,package-lock.json,next.config.mjs" 
+          target: ${{ secrets.TARGET_DIR }}
+          strip_components: 1 # Adjust if needed based on source structure
+
+      - name: Run commands on Server via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ secrets.TARGET_DIR }}
+            npm install --production # Install only production dependencies
+            # Ensure pm2 app name matches the one used in manual setup
+            pm2 reload cybersociety-app || pm2 restart cybersociety-app 

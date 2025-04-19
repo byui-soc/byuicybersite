@@ -16,16 +16,18 @@ Run these commands and perform these steps **on your Ubuntu deployment server**.
         ```
 
 2.  **Install Node.js (using NodeSource):**
-    *   This method allows installing specific Node.js versions (LTS recommended, e.g., v20.x).
-    *   Download and run the NodeSource setup script (replace `20.x` with your desired major version):
+    *   This method allows installing specific Node.js versions (e.g., v23.x based on v23.9.0 used in development).
+    *   Download and run the NodeSource setup script for the major version:
         ```bash
-        curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+        # Note: Node.js v23 is not an LTS release. Consider using the latest LTS (e.g., 20.x or 22.x) for production servers.
+        # Using 23.x will install the latest available Node.js v23 release.
+        curl -fsSL https://deb.nodesource.com/setup_23.x | sudo -E bash -
         ```
     *   Install Node.js:
         ```bash
         sudo apt install -y nodejs
         ```
-    *   Verify installation: `node -v` and `npm -v`
+    *   Verify installation (should show latest v23.x.x): `node -v` and `npm -v`
     *   *(Alternative: Install Node.js via NVM (Node Version Manager) for more flexibility if needed: [https://github.com/nvm-sh/nvm#installing-and-updating](https://github.com/nvm-sh/nvm#installing-and-updating))* 
 
 3.  **Install PM2:**
