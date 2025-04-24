@@ -1,7 +1,7 @@
 // Removed 'use client';
 
 import React from 'react';
-// import Image from 'next/image'; // Removed unused import
+import Image from 'next/image'; // Uncommented for image display
 
 // Placeholder data for leadership - replace with actual data
 const leadershipTeam = [
@@ -14,8 +14,8 @@ const leadershipTeam = [
   {
     name: "Connor Dedic",
     title: 'Competition Captain',
-    bio: 'Organizing and leading participation in cybersecurity competitions.',
-    imageUrl: '/placeholders/leader2.jpg', // Replace with actual image path
+    bio: 'Aspiring security researcher. Interested in network exploitation, development and attack methodologies.',
+    imageUrl: '/images/about/Connor.png',
   },
   {
     name: "Edidiong Ekpe",
@@ -25,10 +25,10 @@ const leadershipTeam = [
   },
   // --- Add the other 6 council members below --- 
   {
-    name: 'Placeholder Member 4',
+    name: 'Tina Chen',
     title: 'Council Member',
-    bio: 'Placeholder bio - update with actual details.',
-    imageUrl: '/placeholders/leader4.jpg',
+    bio: 'From Taiwan and studying cybersecurity. Transferred from BYU-Hawaii after two years majoring in CIT.',
+    imageUrl: '/images/about/Tina.png',
   },
   {
     name: 'Placeholder Member 5',
@@ -110,13 +110,13 @@ export default function AboutPage() {
                   No Img
                 </div>
                 {/* Actual Image - uncomment and use when images are available */}
-                {/* <Image
+                <Image
                   src={member.imageUrl}
                   alt={`Photo of ${member.name}`}
-                  layout="fill"
-                  objectFit="cover"
-                  className="transition-transform duration-300 hover:scale-110"
-                /> */}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="transition-transform duration-300 hover:scale-110 object-cover"
+                />
               </div>
               <h3 className="text-xl font-semibold text-center text-cyan-300 mb-1">{member.name}</h3>
               <p className="text-center text-cyan-500 font-medium mb-3">{member.title}</p>
