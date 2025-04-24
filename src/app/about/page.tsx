@@ -9,7 +9,7 @@ const leadershipTeam = [
     name: "Ethan Hulse",
     title: 'President',
     bio: 'Leading the society and overall strategic direction.',
-    imageUrl: '/placeholders/leader1.jpg', // Replace with actual image path
+    imageUrl: '/images/about/Ethan.jpg',
   },
   {
     name: "Connor Dedic",
@@ -21,7 +21,7 @@ const leadershipTeam = [
     name: "Edidiong Ekpe",
     title: 'Professional Outreach Officer',
     bio: 'Connecting the society with industry professionals and opportunities.',
-    imageUrl: '/placeholders/leader3.jpg', // Replace with actual image path
+    imageUrl: '/images/about/Edidiong.jpg',
   },
   // --- Add the other 6 council members below --- 
   {
@@ -31,10 +31,10 @@ const leadershipTeam = [
     imageUrl: '/images/about/Tina.png',
   },
   {
-    name: 'Placeholder Member 5',
+    name: 'Lily Apraku',
     title: 'Council Member',
-    bio: 'Placeholder bio - update with actual details.',
-    imageUrl: '/placeholders/leader5.jpg',
+    bio: 'Dedicated cybersecurity student with a passion for information security and digital protection.',
+    imageUrl: '/images/about/Lily.jpg',
   },
   {
     name: 'Placeholder Member 6',
