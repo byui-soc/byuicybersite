@@ -17,8 +17,8 @@ export default function HomePage() {
       <div className="relative w-full max-w-3xl mx-auto mb-12 shadow-xl shadow-purple-500/20 rounded-lg overflow-hidden border border-purple-700/50 aspect-video">
          {/* Changed aspect ratio based on typical poster dimensions, adjust if needed */}
          <Image
-            src="/images/nextevent.png" // Use the nextevent file from public/images
-            alt="BYU-I Society of Cybersecurity Upcoming Event Poster"
+            src="/images/Steganography_short.gif" // Use the Steganography GIF
+            alt="BYU-I Society of Cybersecurity Steganography Event"
             fill // Use fill to cover the container
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 66vw" // Help optimize loading
             className="object-contain" // Use object-contain if you don't want cropping, object-cover if cropping is okay
